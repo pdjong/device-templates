@@ -63,7 +63,7 @@ modbus_spy:
 
 dallas:
   - pin: GPIO27  
-    update_interval: 2s
+    update_interval: 5s
   
 sensor:
   - platform: modbus_spy
