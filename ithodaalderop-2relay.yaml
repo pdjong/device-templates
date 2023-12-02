@@ -312,15 +312,6 @@ sensor:
     name: "Modbus Spy WiFi Signal dB"
     id: wifi_signal_db
     update_interval: 20s
-  - platform: dallas
-    index: 0
-    name: Dallas Temperature 1
-  - platform: dallas
-    index: 1
-    name: Dallas Temperature 2
-  - platform: dallas
-    index: 2
-    name: Dallas Temperature 3      
   - platform: pulse_meter
     pin: GPIO33
     name: Pulse Meter
@@ -381,15 +372,9 @@ switch:
   - platform: gpio
     pin: GPIO22
     name: Relais 1
-    id: relay1
-    interlock: [relay2]
-    interlock_wait_time: 3s
   - platform: gpio
     pin: GPIO23
     name: Relais 2
-    id: relay2
-    interlock: [relay1]
-    interlock_wait_time: 3s
 
 web_server:
   port: 80
