@@ -61,9 +61,9 @@ modbus_spy:
   id: modbusspy
   log_not_configured_data: false
 
-dallas:
-  - pin: GPIO27  
-    update_interval: 5s
+#dallas:
+#  - pin: GPIO27  
+#    update_interval: 5s
   
 sensor:
   - platform: modbus_spy
