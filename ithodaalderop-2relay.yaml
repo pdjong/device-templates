@@ -19,7 +19,7 @@ external_components:
   - source: github://pdjong/modbus-spy-esphome@latest-stable
     
 dashboard_import:
-  package_import_url: github://pdjong/device-templates/ithodaalderop-2relay.yaml@main
+  package_import_url: github://pdjong/device-templates/ithodaalderop-4relay.yaml@main
   import_full_config: true  
 
 # Enable logging
@@ -33,7 +33,7 @@ logger:
     ModbusRegisterSensor: INFO
     ModbusBinarySensor: INFO
     sensor: INFO
-    dallas.sensor: ERROR
+    dallas.sensor: NONE
 # Enable Home Assistant API
 api:
 
@@ -61,9 +61,9 @@ modbus_spy:
   id: modbusspy
   log_not_configured_data: false
 
-#dallas:
-#  - pin: GPIO27  
-#    update_interval: 5s
+dallas:
+  - pin: GPIO27  
+    update_interval: 5s
   
 sensor:
   - platform: modbus_spy
@@ -317,6 +317,15 @@ sensor:
     name: Pulse Meter
     total:
       name: Total Pulses  
+  - platform: dallas
+    name: Dallas Temperature 1
+    index: 0
+  - platform: dallas
+    name: Dallas Temperature 2
+    index: 1
+  - platform: dallas
+    name: Dallas Temperature 3
+    index: 2        
 
 binary_sensor:
   - platform: modbus_spy
