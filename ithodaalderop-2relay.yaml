@@ -232,7 +232,14 @@ sensor:
     device_address: 0x02
     register_address: 42106
     filters:
-      - delta: 1    
+      - delta: 1   
+  - platform: modbus_spy
+    name: "Expansion Valve Setting"
+    state_class: "measurement"
+    device_address: 0x02
+    register_address: 42108    
+    filters:
+      - delta: 1      
   - platform: modbus_spy
     name: "Outside Temperature"
     device_class: "temperature"
