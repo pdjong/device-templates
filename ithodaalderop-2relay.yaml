@@ -77,7 +77,8 @@ sensor:
     register_address: 41200
     filters:
       - offset: -3000
-      - multiply: .01
+      - multiply: 0.01
+      - delta: 0.1
   - platform: modbus_spy
     name: "Sanitary Hot Water Temperature"
     device_class: "temperature"
@@ -89,7 +90,8 @@ sensor:
     register_address: 41201
     filters:
       - offset: -3000
-      - multiply: .01  
+      - multiply: 0.01  
+      - delta: 0.1
   - platform: modbus_spy
     name: "Heating/Cooling Temperature"
     device_class: "temperature"
@@ -101,7 +103,8 @@ sensor:
     register_address: 41202
     filters:
       - offset: -3000
-      - multiply: .01     
+      - multiply: 0.01    
+      - delta: 0.1
   - platform: modbus_spy
     name: "Heat Exchanger Water Outlet Temperature"
     device_class: "temperature"
@@ -113,7 +116,8 @@ sensor:
     register_address: 41203
     filters:
       - offset: -3000
-      - multiply: .01   
+      - multiply: 0.01   
+      - delta: 0.1
     on_value:
       then:
         - sensor.template.publish:
@@ -132,7 +136,8 @@ sensor:
     register_address: 41204
     filters:
       - offset: -3000
-      - multiply: .01    
+      - multiply: 0.01    
+      - delta: 0.1
   - platform: template
     name: Heat Exchanger Delta T
     id: heat_exchanger_delta_t  
@@ -152,7 +157,8 @@ sensor:
     register_address: 41205
     filters:
       - offset: -3000
-      - multiply: .01                        
+      - multiply: 0.01   
+      - delta: 0.1
   - platform: modbus_spy
     name: "Heating/Cooling Circuit 1 Temperature"
     device_class: "temperature"
@@ -164,7 +170,8 @@ sensor:
     register_address: 41208
     filters:
       - offset: -3000
-      - multiply: .01
+      - multiply: 0.01
+      - delta: 0.1
   - platform: modbus_spy
     name: "Outdoor Voltage"
     device_class: "voltage"
@@ -173,6 +180,8 @@ sensor:
     unit_of_measurement: "V"
     device_address: 0x02
     register_address: 42101
+    filters:
+      - delta: 1
   - platform: modbus_spy
     name: "Outdoor Current"
     device_class: "current"
@@ -182,7 +191,8 @@ sensor:
     device_address: 0x02
     register_address: 42102
     filters:
-      - multiply: .1
+      - multiply: 0.1
+      - delta: 0.1
   - platform: modbus_spy
     name: "Compressor Working Speed Setpoint"
     device_class: "frequency"
@@ -191,6 +201,8 @@ sensor:
     unit_of_measurement: "Hz"
     device_address: 0x02
     register_address: 42103
+    filters:
+      - delta: 1    
   - platform: modbus_spy
     name: "Compressor Working Speed Actual"
     device_class: "frequency"
@@ -199,6 +211,8 @@ sensor:
     unit_of_measurement: "Hz"
     device_address: 0x02
     register_address: 42104
+    filters:
+      - delta: 1    
   - platform: modbus_spy
     name: "Outdoor Fan Setpoint"
     device_class: "frequency"
@@ -207,6 +221,8 @@ sensor:
     unit_of_measurement: "rpm"
     device_address: 0x02
     register_address: 42105
+    filters:
+      - delta: 1    
   - platform: modbus_spy
     name: "Outdoor Fan 1 Actual"
     device_class: "frequency"
@@ -215,6 +231,8 @@ sensor:
     unit_of_measurement: "rpm"
     device_address: 0x02
     register_address: 42106
+    filters:
+      - delta: 1    
   - platform: modbus_spy
     name: "Outside Temperature"
     device_class: "temperature"
@@ -226,7 +244,8 @@ sensor:
     register_address: 42111
     filters:
       - offset: -3000
-      - multiply: .01
+      - multiply: 0.01
+      - delta: 0.1
   - platform: modbus_spy
     name: "Outdoor Coil Temperature"
     device_class: "temperature"
@@ -238,7 +257,8 @@ sensor:
     register_address: 42112
     filters:
       - offset: -3000
-      - multiply: .01
+      - multiply: 0.01
+      - delta: 0.1
   - platform: modbus_spy
     name: "Discharge Temperature"
     device_class: "temperature"
@@ -250,7 +270,8 @@ sensor:
     register_address: 42113
     filters:
       - offset: -3000
-      - multiply: .01       
+      - multiply: 0.01     
+      - delta: 0.1
   - platform: modbus_spy
     name: "Suction Temperature"
     device_class: "temperature"
@@ -262,7 +283,8 @@ sensor:
     register_address: 42114
     filters:
       - offset: -3000
-      - multiply: .01 
+      - multiply: 0.01 
+      - delta: 0.1
   - platform: modbus_spy
     name: "Low Pressure"
     device_class: "pressure"
@@ -272,7 +294,8 @@ sensor:
     device_address: 0x02
     register_address: 42117
     filters:
-      - multiply: .1    
+      - multiply: 0.1    
+      - delta: 0.1
   - platform: modbus_spy
     name: "High Pressure"
     device_class: "pressure"
@@ -282,7 +305,8 @@ sensor:
     device_address: 0x02
     register_address: 42118
     filters:
-      - multiply: .1   
+      - multiply: 0.1   
+      - delta: 0.1
   - platform: modbus_spy
     id: defrost_value1
     device_address: 0x02
@@ -320,12 +344,18 @@ sensor:
   - platform: dallas
     name: Dallas Temperature 1
     index: 0
+    filters:
+      - delta: 0.1  
   - platform: dallas
     name: Dallas Temperature 2
     index: 1
+    filters:
+      - delta: 0.1      
   - platform: dallas
     name: Dallas Temperature 3
     index: 2        
+    filters:
+      - delta: 0.1      
 
 binary_sensor:
   - platform: modbus_spy
