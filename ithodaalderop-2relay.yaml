@@ -391,6 +391,11 @@ binary_sensor:
                 return "Verwarming";
               else
                 return "Tapwater";    
+  - platform: modbus_spy
+    name: "Internal Auxilliary Heater"
+    icon: "mdi:flash"
+    device_address: 0x0B
+    register_address: 41310                
   - platform: template
     name: "Defrost"
     icon: "mdi:snowflake-alert"
