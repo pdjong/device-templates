@@ -8,7 +8,7 @@ esphome:
   friendly_name: ${friendly_name}
   project:
     name: "pdjong.ithodaalderop"
-    version: "1.0.1"
+    version: "1.0.2"
 
 esp32:
   board: esp32dev
@@ -80,7 +80,7 @@ sensor:
       - multiply: 0.01
       - delta: 0.1
   - platform: modbus_spy
-    name: "Sanitary Hot Water Temperature"
+    name: "Domestic Hot Water Temperature"
     device_class: "temperature"
     accuracy_decimals: 1
     state_class: "measurement"
@@ -89,9 +89,10 @@ sensor:
     device_address: 0x0B
     register_address: 41201
     filters:
+      - filter_out: 3000    
       - offset: -3000
       - multiply: 0.01  
-      - delta: 0.1
+      - delta: 0.1  
   - platform: modbus_spy
     name: "Heating/Cooling Temperature"
     device_class: "temperature"
@@ -102,6 +103,7 @@ sensor:
     device_address: 0x0B
     register_address: 41202
     filters:
+      - filter_out: 3000    
       - offset: -3000
       - multiply: 0.01    
       - delta: 0.1
@@ -115,6 +117,7 @@ sensor:
     device_address: 0x0B
     register_address: 41203
     filters:
+      - filter_out: 3000    
       - offset: -3000
       - multiply: 0.01   
       - delta: 0.1
@@ -135,6 +138,7 @@ sensor:
     device_address: 0x0B
     register_address: 41204
     filters:
+      - filter_out: 3000    
       - offset: -3000
       - multiply: 0.01    
       - delta: 0.1
@@ -156,6 +160,7 @@ sensor:
     device_address: 0x0B
     register_address: 41205
     filters:
+      - filter_out: 3000    
       - offset: -3000
       - multiply: 0.01   
       - delta: 0.1
@@ -169,9 +174,59 @@ sensor:
     device_address: 0x0B
     register_address: 41208
     filters:
+      - filter_out: 3000
       - offset: -3000
       - multiply: 0.01
-      - delta: 0.1
+      - delta: 0.1  	  
+  - platform: modbus_spy
+    name: "Heating/Cooling Circuit 2 Temperature"
+    device_class: "temperature"
+    accuracy_decimals: 1
+    state_class: "measurement"
+    unit_of_measurement: "°C"
+    icon: "mdi:thermometer"    
+    device_address: 0x0B
+    register_address: 41209
+    filters:
+      - filter_out: 3000
+      - offset: -3000
+      - multiply: 0.01
+      - delta: 0.1   
+  - platform: modbus_spy
+    name: "Internal Pump Speed State"
+    state_class: "measurement"
+    device_address: 0x0B
+    register_address: 41304
+    filters:
+      - delta: 1
+      - lambda: !lambda |-      
+          switch ((int)x)
+          {
+            case 1000:
+              return 0;
+            case 500:
+              return 1;
+            case 250:
+              return 2;
+            default:
+              return 3; 
+          }
+    on_value:
+      then:
+        - text_sensor.template.publish:
+            id: internal_pump_speed_text
+            state: !lambda |
+              switch ((int)x)
+              {
+                case 0:
+                  return "Uit";
+                case 1:
+                  return "Laag";
+                case 2:
+                  return "Gemiddeld";
+                default:
+                  return "Hoog";
+              }             
   - platform: modbus_spy
     name: "Outdoor Voltage"
     device_class: "voltage"
@@ -370,6 +425,14 @@ binary_sensor:
     device_address: 0x0B
     register_address: 41301
   - platform: modbus_spy
+    name: "Pump 2 Active"
+    device_address: 0x0B
+    register_address: 41302   
+  - platform: modbus_spy
+    name: "Domestic Hot Water Pump Active"
+    device_address: 0x0B
+    register_address: 41303     
+  - platform: modbus_spy
     name: "Internal Pump Active"
     device_address: 0x0B
     register_address: 41213
@@ -414,6 +477,9 @@ text_sensor:
   - platform: template
     name: Three Way Valve
     id: three_way_valve_text
+  - platform: template
+    name: Internal Pump Speed
+    id: internal_pump_speed_text    
 
 switch:
   - platform: restart
