@@ -431,7 +431,7 @@ switch:
     name: Relais 3
   - platform: gpio
     pin: GPIO25
-    name: Relais 4	
+    name: Relais 4
 
 web_server:
   port: 80
